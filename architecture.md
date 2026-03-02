@@ -29,6 +29,7 @@ graph TB
         G[("MongoDB<br/>products-db")]
         H[("MongoDB<br/>media-db")]
         I["Object Storage<br/>Images/Files"]
+        K[("Redis Cache<br/>Shared")]
     end
     
     A -->|HTTPS + JWT| B
@@ -47,6 +48,10 @@ graph TB
     D --> G
     E --> H
     E --> I
+    
+    C --> K
+    D --> K
+    E --> K
     
     C -->|Events| J
     D -->|Events| J
@@ -72,6 +77,7 @@ graph TB
  **Centralized Authentication** - JWT validation at Gateway only  
  **Decoupled Services** - No direct service-to-service calls  
  **Independent Databases** - Zero shared database  
+ **Shared Redis Cache** - Product catalog, sessions, rate limiting  
  **Gateway as Single Entry Point** - Client never talks to services directly  
  **Event-Driven Capability** - Kafka for async communication  
  **Stateless Services** - Horizontal scaling ready  

@@ -11,6 +11,17 @@ services:
     networks:
       - buy01-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: buy01-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - buy01-network
+
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
     container_name: buy01-zookeeper
@@ -39,6 +50,7 @@ services:
 
 volumes:
   mongo-data:
+  redis-data:
 
 networks:
   buy01-network:
