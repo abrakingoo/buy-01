@@ -18,6 +18,9 @@ public class UserRegistarionService {
     private final UserRepository userRepo;
 
     public User saveUser(UserRegistartionDetails userRegistartionDetails){
+        if(userRepo.findByEmail(userRegistartionDetails.email()) != null){
+            return null;
+        }
         
         String hashedPassword = HashPassword.hash(userRegistartionDetails.password());
         
