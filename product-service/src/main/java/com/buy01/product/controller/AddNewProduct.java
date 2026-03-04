@@ -13,7 +13,7 @@ public class AddNewProduct {
 
     @PostMapping
     public NewProduct addNewProduct(@RequestBody NewProduct requestData){
-        return new NewProduct(requestData.name(), requestData.description(), requestData.price());
+        return requestData;
 
     }
 }
