@@ -1,0 +1,32 @@
+server:
+  port: 8083
+
+spring:
+  application:
+    name: media-service
+  data:
+    mongodb:
+      uri: ${SPRING_DATA_MONGODB_URI:mongodb://localhost:27017/media-db}
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+media:
+  upload-dir: ${MEDIA_UPLOAD_DIR:/var/media/uploads}
+  max-file-size: 2097152
+  allowed-mime-types: image/jpeg,image/png,image/gif,image/webp
+
+minio:
+  url: http://localhost:9010
+  access-key: minioadmin
+  secret-key: minioadmin
+  bucket-name: product-images
+
