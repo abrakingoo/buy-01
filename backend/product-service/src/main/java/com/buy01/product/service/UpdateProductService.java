@@ -1,5 +1,6 @@
 package com.buy01.product.service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,7 @@ public class UpdateProductService {
         if (requestData.imageUrls() != null) {
             existingProduct.setImageUrls(requestData.imageUrls());
         }
+        existingProduct.setUpdatedAt(LocalDateTime.now());
 
         productsRepo.save(existingProduct);
         return ResponseEntity.ok(existingProduct);

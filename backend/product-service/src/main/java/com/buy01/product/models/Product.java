@@ -2,6 +2,7 @@ package com.buy01.product.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Data;
@@ -23,5 +24,7 @@ public class Product {
     int stock;
     String sellerId;
     List<String> imageUrls;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 
 }

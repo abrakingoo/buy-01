@@ -1,5 +1,6 @@
 package com.buy01.product.service;
 
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,7 @@ public class AddNewProductService {
         }
 
         String productId = ProductId.generateId();
+        LocalDateTime now = LocalDateTime.now();
 
         Product product = new Product();
         product.setId(productId);
@@ -49,6 +51,8 @@ public class AddNewProductService {
         product.setStock(requestData.stock() != null ? requestData.stock() : 0);
         product.setSellerId(requestData.sellerId());
         product.setImageUrls(requestData.imageUrls());
+        product.setCreatedAt(now);
+        product.setUpdatedAt(now);
         
         if (productsRepo.save(product) == null) {
             return ResponseEntity.internalServerError().body(Map.of("error", "Failed to save product"));
