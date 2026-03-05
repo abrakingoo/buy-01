@@ -5,13 +5,14 @@ import { ProductService } from '../../services/product.service';
 import { MediaService } from '../../services/media.service';
 import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services/toast.service';
+import { KshCurrencyPipe } from '../../pipes/currency.pipe';
 import { Product } from '../../models/product.model';
 import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-seller-dashboard',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, KshCurrencyPipe],
   templateUrl: './seller-dashboard.component.html',
   styleUrls: ['./seller-dashboard.component.css']
 })
