@@ -1,0 +1,53 @@
+<div class="profile-container">
+  <div class="profile-card">
+    <div class="profile-header">
+      <h1>My Profile</h1>
+      <p>Manage your account information</p>
+    </div>
+
+    <div *ngIf="user" class="profile-content">
+      <div class="info-section">
+        <h2>Account Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Email Address</label>
+            <span class="info-value">{{ user.email }}</span>
+          </div>
+          <div class="info-item">
+            <label>Full Name</label>
+            <span class="info-value">{{ user.name }}</span>
+          </div>
+          <div class="info-item">
+            <label>Account Type</label>
+            <span class="info-badge" [class.seller]="user.role === 'SELLER'" [class.client]="user.role === 'CLIENT'">
+              {{ user.role }}
+            </span>
+          </div>
+          <div class="info-item">
+            <label>Member Since</label>
+            <span class="info-value">{{ user.createdAt | date: 'MMM d, yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="edit-section">
+        <h2>Update Profile</h2>
+        <div *ngIf="message" class="message" [class.success]="message.includes('successfully')">
+          {{ message }}
+        </div>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" formControlName="name" placeholder="Enter your full name" required>
+            <div class="error" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+              ✗ Name is required
+            </div>
+          </div>
+          <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
+            {{ loading ? 'Updating...' : 'Update Profile' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
