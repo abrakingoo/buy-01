@@ -1,5 +1,7 @@
 package com.buy01.user.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +25,13 @@ public class LoginUser {
     private final JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginCredentials loginCredentials) {
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginCredentials loginCredentials) {
         User user = userloginService.login(loginCredentials);
         if (user == null) {
-            return null;
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
         UserDetails userDetails = new UserDetails(user.getId(), user.getName(), user.getEmail(), user.getRole(), user.getCreatedAt());
         String token = jwtTokenProvider.generateToken(user.getId(), user.getRole());
-        return new AuthResponse(token, userDetails);
+        return ResponseEntity.ok(new AuthResponse(token, userDetails));
     }
 }
