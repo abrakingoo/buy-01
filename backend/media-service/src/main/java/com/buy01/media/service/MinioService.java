@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.buy01.media.event.ImageUploadedEvent;
+import com.buy01.media.event.MediaEventProducer;
 import com.buy01.media.model.ImageModel;
 import com.buy01.media.repository.ImageRepository;
 
@@ -25,6 +27,7 @@ public class MinioService {
 
     private final MinioClient minioClient;
     private final ImageRepository imageRepo;
+    private final MediaEventProducer mediaEventProducer;
 
     @Value("${minio.bucket-name}")
     private String bucketName;
@@ -51,6 +54,16 @@ public class MinioService {
             if (imageRepo.save(imageModel) == null){
                 return ResponseEntity.internalServerError().body(Map.of("error", "Failed to save image metadata"));
             };
+            
+            mediaEventProducer.publishImageUploaded(new ImageUploadedEvent(
+                imageModel.getId(),
+                sellerId,
+                fileName,
+                imageUrl,
+                file.getSize(),
+                System.currentTimeMillis()
+            ));
+            
             return ResponseEntity.ok(Map.of("url", imageUrl, "message", "Image uploaded successfully"));
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body(Map.of("error", e.getMessage()));

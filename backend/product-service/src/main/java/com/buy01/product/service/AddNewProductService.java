@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.buy01.product.dto.NewProduct;
+import com.buy01.product.event.ProductCreatedEvent;
+import com.buy01.product.event.ProductEventProducer;
 import com.buy01.product.models.Product;
 import com.buy01.product.repository.ProductsRepository;
 import com.buy01.product.utils.ProductId;
@@ -18,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class AddNewProductService {
 
     private final ProductsRepository productsRepo;
+    private final ProductEventProducer productEventProducer;
     
     public ResponseEntity<?> add(NewProduct requestData){
         if(requestData.price() != null && requestData.price() < 0) {
@@ -50,6 +53,14 @@ public class AddNewProductService {
         if (productsRepo.save(product) == null) {
             return ResponseEntity.internalServerError().body(Map.of("error", "Failed to save product"));
         }
+        
+        productEventProducer.publishProductCreated(new ProductCreatedEvent(
+            productId,
+            requestData.sellerId(),
+            requestData.name(),
+            requestData.price() != null ? requestData.price() : 0,
+            System.currentTimeMillis()
+        ));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
