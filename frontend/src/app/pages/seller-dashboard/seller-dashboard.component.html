@@ -54,18 +54,36 @@
         <div class="form-group">
           <label>Name</label>
           <input type="text" formControlName="name" required>
+          <small *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="error-message">
+            Name is required
+          </small>
         </div>
         <div class="form-group">
           <label>Description</label>
           <textarea formControlName="description" required></textarea>
+          <small *ngIf="form.get('description')?.invalid && form.get('description')?.touched" class="error-message">
+            Description is required
+          </small>
         </div>
         <div class="form-group">
           <label>Price</label>
           <input type="number" formControlName="price" required>
+          <small *ngIf="form.get('price')?.hasError('required') && form.get('price')?.touched" class="error-message">
+            Price is required
+          </small>
+          <small *ngIf="form.get('price')?.hasError('min') && form.get('price')?.touched" class="error-message">
+            Price cannot be negative
+          </small>
         </div>
         <div class="form-group">
           <label>Stock</label>
           <input type="number" formControlName="stock" required>
+          <small *ngIf="form.get('stock')?.hasError('required') && form.get('stock')?.touched" class="error-message">
+            Stock is required
+          </small>
+          <small *ngIf="form.get('stock')?.hasError('min') && form.get('stock')?.touched" class="error-message">
+            Stock cannot be negative
+          </small>
         </div>
         <div class="form-actions">
           <button type="submit" [disabled]="form.invalid || loading">

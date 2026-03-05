@@ -275,6 +275,11 @@ h2 {
   font-size: 0.85rem;
 }
 
+.error-message {
+  color: #dc3545 !important;
+  font-weight: 500;
+}
+
 .image-previews {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

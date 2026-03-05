@@ -16,7 +16,16 @@ import { MediaResponse } from '../../models/media.model';
         <p style="font-size: 0.875rem; color: #666; margin-top: 0.5rem;">
           Max 2MB, formats: JPEG, PNG, GIF, WebP
         </p>
-        <button (click)="uploadImage()" [disabled]="!selectedFile || uploading" style="margin-top: 1rem;">
+        <div *ngIf="validationError" style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.875rem;">
+          {{ validationError }}
+        </div>
+        <div *ngIf="uploadError" style="color: #d32f2f; margin-top: 0.5rem; font-size: 0.875rem;">
+          {{ uploadError }}
+        </div>
+        <div *ngIf="selectedFile" style="color: #1976d2; margin-top: 0.5rem; font-size: 0.875rem;">
+          Selected: {{ selectedFile.name }} ({{ (selectedFile.size / 1024 / 1024).toFixed(2) }}MB)
+        </div>
+        <button (click)="uploadImage()" [disabled]="!selectedFile || uploading || !!validationError" style="margin-top: 1rem;">
           {{ uploading ? 'Uploading...' : 'Upload' }}
         </button>
       </div>
@@ -38,13 +47,34 @@ export class MediaManagerComponent {
   selectedFile: File | null = null;
   uploadedImages: MediaResponse[] = [];
   uploading = false;
+  validationError = '';
+  uploadError = '';
+  private readonly MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+  private readonly ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
   constructor(private mediaService: MediaService) {}
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
+    this.validationError = '';
+    this.uploadError = '';
+    
     if (input.files?.length) {
-      this.selectedFile = input.files[0];
+      const file = input.files[0];
+      
+      if (!this.ALLOWED_MIME_TYPES.includes(file.type)) {
+        this.validationError = `Invalid file type. Allowed: JPEG, PNG, GIF, WebP`;
+        this.selectedFile = null;
+        return;
+      }
+      
+      if (file.size > this.MAX_FILE_SIZE) {
+        this.validationError = `File size exceeds 2MB limit (${(file.size / 1024 / 1024).toFixed(2)}MB)`;
+        this.selectedFile = null;
+        return;
+      }
+      
+      this.selectedFile = file;
     }
   }
 
@@ -52,14 +82,16 @@ export class MediaManagerComponent {
     if (!this.selectedFile) return;
 
     this.uploading = true;
+    this.uploadError = '';
     this.mediaService.uploadImage(this.selectedFile).subscribe({
       next: (response) => {
         this.uploadedImages.push(response);
         this.selectedFile = null;
+        this.validationError = '';
         this.uploading = false;
       },
       error: (err) => {
-        console.error('Upload failed', err);
+        this.uploadError = err.error?.message || 'Upload failed. Please try again.';
         this.uploading = false;
       }
     });

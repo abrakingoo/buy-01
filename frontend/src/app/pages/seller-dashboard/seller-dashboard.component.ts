@@ -54,7 +54,23 @@ export class SellerDashboardComponent implements OnInit {
   onFilesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files) {
-      this.selectedFiles = Array.from(input.files);
+      const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+      const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+      const validFiles: File[] = [];
+      
+      Array.from(input.files).forEach(file => {
+        if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+          this.toastService.show(`${file.name}: Invalid file type. Use JPEG, PNG, GIF, or WebP.`, 'error');
+          return;
+        }
+        if (file.size > MAX_FILE_SIZE) {
+          this.toastService.show(`${file.name}: File exceeds 2MB limit.`, 'error');
+          return;
+        }
+        validFiles.push(file);
+      });
+      
+      this.selectedFiles = validFiles;
       this.imagePreviews = [];
       
       this.selectedFiles.forEach(file => {
