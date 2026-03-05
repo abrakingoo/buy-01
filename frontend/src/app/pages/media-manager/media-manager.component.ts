@@ -103,7 +103,9 @@ export class MediaManagerComponent {
         next: () => {
           this.uploadedImages = this.uploadedImages.filter(img => img.id !== id);
         },
-        error: (err) => console.error('Delete failed', err)
+        error: () => {
+          // Error already handled by error interceptor
+        }
       });
     }
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ProductService } from '../../services/product.service';
+import { ToastService } from '../../services/toast.service';
 import { KshCurrencyPipe } from '../../pipes/currency.pipe';
 import { Product } from '../../models/product.model';
 
@@ -15,14 +16,16 @@ import { Product } from '../../models/product.model';
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
 
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.productService.getProducts().subscribe({
       next: (response: any) => {
         this.products = Array.isArray(response) ? response : response.content || [];
       },
-      error: (err) => console.error('Failed to load products', err)
+      error: () => {
+        this.toastService.show('Failed to load products', 'error');
+      }
     });
   }
 }

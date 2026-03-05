@@ -32,9 +32,6 @@
 
       <div class="edit-section">
         <h2>Update Profile</h2>
-        <div *ngIf="message" class="message" [class.success]="message.includes('successfully')">
-          {{ message }}
-        </div>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="form-group">
             <label>Full Name</label>

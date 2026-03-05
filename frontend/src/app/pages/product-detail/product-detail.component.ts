@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductService } from '../../services/product.service';
+import { ToastService } from '../../services/toast.service';
 import { KshCurrencyPipe } from '../../pipes/currency.pipe';
 import { Product } from '../../models/product.model';
 
@@ -19,7 +20,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private location: Location
+    private location: Location,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -28,7 +30,9 @@ export class ProductDetailComponent implements OnInit {
         next: (product) => {
           this.product = product;
         },
-        error: (err) => console.error('Failed to load product', err)
+        error: () => {
+          this.toastService.show('Failed to load product', 'error');
+        }
       });
     });
   }
