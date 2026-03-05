@@ -22,11 +22,19 @@ public class GatewayFilter implements GlobalFilter {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         String path = exchange.getRequest().getURI().getPath();
+        String method = exchange.getRequest().getMethod().toString();
         
+        // Allow public endpoints
         if (path.startsWith("/api/auth/")) {
             return chain.filter(exchange);
         }
         
+        // Allow GET requests to products (public browsing)
+        if (method.equals("GET") && path.startsWith("/api/products")) {
+            return chain.filter(exchange);
+        }
+        
+        // Require JWT for all other requests
         String token = extractToken(exchange);
         if (token == null) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
