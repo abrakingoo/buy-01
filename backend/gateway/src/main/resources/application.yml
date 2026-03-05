@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: gateway
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
   cloud:
     gateway:
       discovery:
@@ -15,14 +18,32 @@ spring:
           uri: lb://user-service
           predicates:
             - Path=/api/auth/**, /api/users/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
+                key-resolver: "#{@userKeyResolver}"
         - id: product-service
           uri: lb://product-service
           predicates:
             - Path=/api/products/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 20
+                redis-rate-limiter.burstCapacity: 40
+                key-resolver: "#{@userKeyResolver}"
         - id: media-service
           uri: lb://media-service
           predicates:
             - Path=/api/media/**
+          filters:
+            - name: RequestRateLimiter
+              args:
+                redis-rate-limiter.replenishRate: 5
+                redis-rate-limiter.burstCapacity: 10
+                key-resolver: "#{@userKeyResolver}"
       globalcors:
         cors-configurations:
           '[/**]':

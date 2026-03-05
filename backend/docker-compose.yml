@@ -52,6 +52,14 @@ services:
     networks:
       - buy01-network
 
+  redis:
+    image: redis:7-alpine
+    container_name: buy01-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - buy01-network
+
 
 volumes:
   mongo-data:
