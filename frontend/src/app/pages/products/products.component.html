@@ -16,7 +16,7 @@
         <h3 class="product-name">{{ product.name }}</h3>
         <p class="product-description">{{ product.description | slice:0:80 }}...</p>
         <div class="product-footer">
-          <div class="product-price">${{ product.price }}</div>
+          <div class="product-price">{{ product.price | kshCurrency }}</div>
           <div class="product-stock" [class.low-stock]="product.stock < 5">
             {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
           </div>
