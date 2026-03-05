@@ -11,6 +11,10 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 2MB
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 eureka:
   client:
