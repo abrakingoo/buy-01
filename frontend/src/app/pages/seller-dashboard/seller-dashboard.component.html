@@ -1,0 +1,91 @@
+<div>
+  <div class="toast-container" *ngIf="(toastService.getToasts() | async) as toasts">
+    <div *ngFor="let toast of toasts" class="toast" [ngClass]="'toast-' + toast.type">
+      {{ toast.message }}
+    </div>
+  </div>
+  <h1>Seller Dashboard</h1>
+  <div class="dashboard-grid">
+    <div class="products-section">
+      <h2>Your Products</h2>
+      <div *ngFor="let product of products" class="product-card">
+        <img 
+          *ngIf="product.imageUrls && product.imageUrls.length > 0" 
+          [src]="product.imageUrls[0]" 
+          alt="{{ product.name }}"
+          class="product-image">
+        <div *ngIf="!product.imageUrls || product.imageUrls.length === 0" class="product-image-placeholder">
+          No Image
+        </div>
+        <div class="product-info">
+          <div class="product-name">{{ product.name }}</div>
+          <p class="product-description">{{ product.description | slice:0:120 }}...</p>
+          <div class="product-details">
+            <div class="product-detail-item">
+              <span class="product-detail-label">Price:</span>
+              <span class="product-price">${{ product.price }}</span>
+            </div>
+            <div class="product-detail-item">
+              <span class="product-detail-label">Stock:</span>
+              <span class="product-stock">{{ product.stock }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-actions">
+          <button (click)="editProduct(product)">Edit</button>
+          <button (click)="deleteProduct(product.id)">Delete</button>
+        </div>
+      </div>
+      <div *ngIf="products.length === 0" class="empty-state">
+        No products yet. Create your first product!
+      </div>
+    </div>
+    <div class="form-card">
+      <h2>{{ editingId ? 'Edit Product' : 'Create Product' }}</h2>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Product Images</label>
+          <input type="file" accept="image/*" multiple (change)="onFilesSelected($event)">
+          <small>Max 2MB each</small>
+          <div *ngIf="imagePreviews.length > 0" class="image-previews">
+            <img *ngFor="let preview of imagePreviews" [src]="preview" class="image-preview">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" formControlName="name" required>
+        </div>
+        <div class="form-group">
+          <label>Description</label>
+          <textarea formControlName="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label>Price</label>
+          <input type="number" formControlName="price" required>
+        </div>
+        <div class="form-group">
+          <label>Stock</label>
+          <input type="number" formControlName="stock" required>
+        </div>
+        <div class="form-actions">
+          <button type="submit" [disabled]="form.invalid || loading">
+            {{ loading ? 'Saving...' : (editingId ? 'Update Product' : 'Create Product') }}
+          </button>
+          <button *ngIf="editingId" type="button" (click)="cancelEdit()">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="showDeleteModal" class="delete-modal-overlay">
+    <div class="delete-modal">
+      <h3>Delete Product</h3>
+      <p>Are you sure you want to delete this product? This action cannot be undone.</p>
+      <div class="delete-modal-actions">
+        <button (click)="confirmDelete()">Delete</button>
+        <button (click)="cancelDelete()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
