@@ -87,8 +87,9 @@ import { filter } from 'rxjs/operators';
       display: flex;
       justify-content: space-between;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 1rem;
+      position: relative;
     }
     .logo {
       font-size: clamp(1.2rem, 4vw, 1.5rem);
@@ -215,9 +216,12 @@ import { filter } from 'rxjs/operators';
       .hamburger {
         display: flex;
       }
+      .navbar .container {
+        flex-wrap: wrap;
+      }
       .nav-links {
-        position: absolute;
-        top: 100%;
+        position: fixed;
+        top: 60px;
         left: 0;
         right: 0;
         background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
@@ -226,6 +230,8 @@ import { filter } from 'rxjs/operators';
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.3s ease;
+        z-index: 1000;
+        width: 100%;
       }
       .nav-links.open {
         max-height: 500px;
@@ -234,6 +240,8 @@ import { filter } from 'rxjs/operators';
         padding: 1rem 1.5rem;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         text-align: left;
+        width: 100%;
+        box-sizing: border-box;
       }
       .nav-links button {
         background: rgba(255, 255, 255, 0.2);
@@ -241,7 +249,6 @@ import { filter } from 'rxjs/operators';
         border: none;
         cursor: pointer;
         font-weight: 600;
-        width: 100%;
       }
     }
   `]
