@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { ToastDisplayComponent } from './components/toast-display.component';
 import { User } from './models/auth.model';
 import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, ToastDisplayComponent],
   template: `
     <nav class="navbar">
       <div class="container">
@@ -32,6 +33,7 @@ import { filter } from 'rxjs/operators';
     <main class="container">
       <router-outlet></router-outlet>
     </main>
+    <app-toast-display></app-toast-display>
     <footer class="footer">
       <div class="footer-content">
         <div class="footer-section">

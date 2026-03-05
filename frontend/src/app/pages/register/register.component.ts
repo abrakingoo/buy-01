@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -47,9 +48,6 @@ import { AuthService } from '../../services/auth.service';
             <div class="error" *ngIf="form.get('role')?.invalid && form.get('role')?.touched">
               ✗ Please select an account type
             </div>
-          </div>
-          <div class="error-message" *ngIf="errorMessage">
-            {{ errorMessage }}
           </div>
           <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
             {{ loading ? 'Creating Account...' : 'Create Account' }}
@@ -180,26 +178,17 @@ import { AuthService } from '../../services/auth.service';
     .card-footer a:hover {
       color: #F7931E;
     }
-    .error-message {
-      background-color: #ffebee;
-      color: #d32f2f;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      border-left: 4px solid #d32f2f;
-    }
   `]
 })
 export class RegisterComponent {
   form: FormGroup;
   loading = false;
-  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required]],
@@ -213,13 +202,17 @@ export class RegisterComponent {
     if (this.form.invalid) return;
 
     this.loading = true;
-    this.errorMessage = '';
     this.authService.register(this.form.value).subscribe({
       next: () => {
+        this.toastService.show('Account created successfully!', 'success');
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        this.errorMessage = err.status === 409 ? 'Email already exists' : 'Registration failed. Please try again.';
+        if (err.status === 409) {
+          this.toastService.show('Email already exists', 'error');
+        } else {
+          this.toastService.show('Registration failed. Please try again.', 'error');
+        }
         this.loading = false;
       }
     });

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -29,9 +30,6 @@ import { AuthService } from '../../services/auth.service';
             <div class="error" *ngIf="form.get('password')?.invalid && form.get('password')?.touched">
               ✗ Password required
             </div>
-          </div>
-          <div class="error-message" *ngIf="errorMessage">
-            {{ errorMessage }}
           </div>
           <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
             {{ loading ? 'Signing in...' : 'Sign In' }}
@@ -154,26 +152,17 @@ import { AuthService } from '../../services/auth.service';
     .card-footer a:hover {
       color: #F7931E;
     }
-    .error-message {
-      background-color: #ffebee;
-      color: #d32f2f;
-      padding: 0.75rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1rem;
-      font-size: 0.9rem;
-      border-left: 4px solid #d32f2f;
-    }
   `]
 })
 export class LoginComponent {
   form: FormGroup;
   loading = false;
-  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -185,16 +174,15 @@ export class LoginComponent {
     if (this.form.invalid) return;
 
     this.loading = true;
-    this.errorMessage = '';
     this.authService.login(this.form.value).subscribe({
       next: () => {
         this.router.navigate(['/products']);
       },
       error: (err) => {
         if (err.status === 401) {
-          this.errorMessage = 'Invalid email or password. Don\'t have an account? Create one below.';
+          this.toastService.show('Invalid email or password', 'error');
         } else {
-          this.errorMessage = 'Login failed. Please try again.';
+          this.toastService.show('Login failed. Please try again.', 'error');
         }
         this.loading = false;
       }
