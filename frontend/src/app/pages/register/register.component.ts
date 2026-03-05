@@ -65,7 +65,7 @@ import { ToastService } from '../../services/toast.service';
       justify-content: center;
       align-items: center;
       min-height: 60vh;
-      padding: 2rem;
+      padding: 1rem;
     }
     .register-card {
       background: white;
@@ -78,22 +78,22 @@ import { ToastService } from '../../services/toast.service';
     .card-header {
       background: white;
       color: #333;
-      padding: 2.5rem 2rem;
+      padding: 2rem 1.5rem;
       text-align: center;
     }
     .card-header h1 {
       margin: 0 0 0.5rem;
-      font-size: 1.8rem;
+      font-size: clamp(1.5rem, 5vw, 1.8rem);
       font-weight: 700;
       color: #333;
     }
     .card-header p {
       margin: 0;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
       color: #666;
     }
     form {
-      padding: 2rem;
+      padding: 1.5rem;
     }
     .form-group {
       margin-bottom: 1.5rem;
@@ -103,7 +103,7 @@ import { ToastService } from '../../services/toast.service';
       margin-bottom: 0.6rem;
       font-weight: 600;
       color: #333;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
     }
     input, select {
       width: 100%;
@@ -132,7 +132,7 @@ import { ToastService } from '../../services/toast.service';
     }
     .error {
       color: #d32f2f;
-      font-size: 0.85rem;
+      font-size: clamp(0.75rem, 2vw, 0.85rem);
       margin-top: 0.4rem;
       display: flex;
       align-items: center;
@@ -145,7 +145,7 @@ import { ToastService } from '../../services/toast.service';
       color: white;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 3vw, 1rem);
       font-weight: 600;
       cursor: pointer;
       transition: all 0.3s;
@@ -160,14 +160,14 @@ import { ToastService } from '../../services/toast.service';
       cursor: not-allowed;
     }
     .card-footer {
-      padding: 0 2rem 2rem;
+      padding: 0 1.5rem 1.5rem;
       text-align: center;
       border-top: 1px solid #f0f0f0;
     }
     .card-footer p {
       margin: 1rem 0 0;
       color: #666;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 3vw, 0.95rem);
     }
     .card-footer a {
       color: #FF6B35;

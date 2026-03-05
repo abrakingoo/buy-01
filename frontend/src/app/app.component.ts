@@ -74,7 +74,7 @@ import { filter } from 'rxjs/operators';
     .navbar {
       background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
       color: white;
-      padding: 1.2rem 0;
+      padding: clamp(0.8rem, 2vw, 1.2rem) 0;
       margin-bottom: 2rem;
       box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
     }
@@ -82,9 +82,11 @@ import { filter } from 'rxjs/operators';
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
     }
     .logo {
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
       font-weight: 700;
       color: white;
       text-decoration: none;
@@ -92,15 +94,16 @@ import { filter } from 'rxjs/operators';
     }
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: clamp(1rem, 3vw, 2rem);
       align-items: center;
+      flex-wrap: wrap;
     }
     .nav-links a {
       color: white;
       text-decoration: none;
       font-weight: 500;
       transition: color 0.2s;
-      font-size: 0.95rem;
+      font-size: clamp(0.85rem, 2vw, 0.95rem);
     }
     .nav-links a:hover {
       color: #FFE5CC;
@@ -108,10 +111,10 @@ import { filter } from 'rxjs/operators';
     .nav-links button {
       background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
       color: #333;
-      padding: 0.6rem 1.2rem;
+      padding: clamp(0.5rem, 1vw, 0.6rem) clamp(0.8rem, 2vw, 1.2rem);
       border-radius: 6px;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
       border: none;
       cursor: pointer;
     }
@@ -121,7 +124,7 @@ import { filter } from 'rxjs/operators';
     .container {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 clamp(1rem, 3vw, 2rem);
     }
     main {
       min-height: calc(100vh - 300px);
@@ -130,25 +133,25 @@ import { filter } from 'rxjs/operators';
       background: linear-gradient(135deg, #333 0%, #1a1a1a 100%);
       color: white;
       margin-top: 4rem;
-      padding: 3rem 0 1rem;
+      padding: clamp(2rem, 5vw, 3rem) 0 1rem;
     }
     .footer-content {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 clamp(1rem, 3vw, 2rem);
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(clamp(200px, 40vw, 250px), 1fr));
+      gap: clamp(1.5rem, 3vw, 2rem);
       margin-bottom: 2rem;
     }
     .footer-section h3 {
       color: #FF6B35;
       margin-bottom: 1rem;
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 3vw, 1.1rem);
     }
     .footer-section p {
       color: #ccc;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
       line-height: 1.6;
       margin-bottom: 0.5rem;
     }
@@ -162,6 +165,7 @@ import { filter } from 'rxjs/operators';
       color: #ccc;
       text-decoration: none;
       transition: color 0.2s;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
     }
     .footer-section a:hover {
       color: #FF6B35;
@@ -171,11 +175,17 @@ import { filter } from 'rxjs/operators';
       padding-top: 2rem;
       border-top: 1px solid #444;
       color: #999;
-      font-size: 0.9rem;
+      font-size: clamp(0.8rem, 2vw, 0.9rem);
       max-width: 1400px;
       margin: 0 auto;
-      padding-left: 2rem;
-      padding-right: 2rem;
+      padding-left: clamp(1rem, 3vw, 2rem);
+      padding-right: clamp(1rem, 3vw, 2rem);
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+      }
     }
   `]
 })
