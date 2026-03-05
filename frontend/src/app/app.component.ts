@@ -14,18 +14,23 @@ import { filter } from 'rxjs/operators';
     <nav class="navbar">
       <div class="container">
         <a routerLink="/" class="logo">Buy-01</a>
-        <div class="nav-links">
-          <a routerLink="/products">Products</a>
+        <button class="hamburger" (click)="toggleMenu()" [class.active]="menuOpen">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="nav-links" [class.open]="menuOpen">
+          <a routerLink="/products" (click)="menuOpen = false">Products</a>
           <ng-container *ngIf="currentUser">
             <span *ngIf="currentUser.role === 'SELLER'">
-              <a routerLink="/seller/dashboard">Dashboard</a>
+              <a routerLink="/seller/dashboard" (click)="menuOpen = false">Dashboard</a>
             </span>
-            <a routerLink="/profile">{{ currentUser.name }}</a>
-            <button (click)="logout()">Logout</button>
+            <a routerLink="/profile" (click)="menuOpen = false">{{ currentUser.name }}</a>
+            <button (click)="logout(); menuOpen = false">Logout</button>
           </ng-container>
           <ng-container *ngIf="!currentUser">
-            <a routerLink="/login">Login</a>
-            <a routerLink="/register">Register</a>
+            <a routerLink="/login" (click)="menuOpen = false">Login</a>
+            <a routerLink="/register" (click)="menuOpen = false">Register</a>
           </ng-container>
         </div>
       </div>
@@ -181,16 +186,69 @@ import { filter } from 'rxjs/operators';
       padding-left: clamp(1rem, 3vw, 2rem);
       padding-right: clamp(1rem, 3vw, 2rem);
     }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      background: none;
+      border: none;
+      cursor: pointer;
+      gap: 5px;
+      padding: 0.5rem;
+    }
+    .hamburger span {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(8px, 8px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
     @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
       .nav-links {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+        flex-direction: column;
+        gap: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      .nav-links.open {
+        max-height: 500px;
+      }
+      .nav-links a, .nav-links button {
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        text-align: left;
+      }
+      .nav-links button {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
         width: 100%;
-        justify-content: flex-start;
       }
     }
   `]
 })
 export class AppComponent implements OnInit {
   currentUser: User | null = null;
+  menuOpen = false;
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -202,7 +260,12 @@ export class AppComponent implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
       this.currentUser = this.authService.getCurrentUser();
+      this.menuOpen = false;
     });
+  }
+
+  toggleMenu(): void {
+    this.menuOpen = !this.menuOpen;
   }
 
   logout(): void {
