@@ -34,7 +34,7 @@ public class GatewayFilter implements GlobalFilter {
             return chain.filter(exchange);
         }
         
-        // Require JWT for all other requests
+        // Require JWT for all other requests (POST, PUT, DELETE)
         String token = extractToken(exchange);
         if (token == null) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
@@ -49,19 +49,12 @@ public class GatewayFilter implements GlobalFilter {
                     .parseSignedClaims(token)
                     .getPayload();
             
-            String userId = claims.getSubject();
-            String role = (String) claims.get("role");
-            
-            exchange.getRequest().mutate()
-                    .header("X-User-Id", userId)
-                    .header("X-Role", role)
-                    .build();
+            // Token is valid, pass through
+            return chain.filter(exchange);
         } catch (Exception e) {
             exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
             return exchange.getResponse().setComplete();
         }
-        
-        return chain.filter(exchange);
     }
     
     private String extractToken(ServerWebExchange exchange) {
