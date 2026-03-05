@@ -1,6 +1,6 @@
 # Buy-01 Quick Reference Guide
 
-## 🚀 Start Services (30 seconds)
+## Start Services (30 seconds)
 
 ```bash
 cd backend && docker-compose up -d
@@ -14,7 +14,7 @@ cd frontend && npm install && ng serve
 
 ---
 
-## 🔑 Authentication
+## Authentication
 
 ### Register
 ```bash
@@ -45,7 +45,7 @@ TOKEN="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
 
 ---
 
-## 📦 Products
+## Products
 
 ### Create
 ```bash
@@ -88,7 +88,7 @@ curl -X DELETE http://localhost:8080/api/products/{productId} \
 
 ---
 
-## 🖼️ Images
+## Images
 
 ### Upload
 ```bash
@@ -112,7 +112,7 @@ curl -X DELETE http://localhost:8080/api/media/images/{imageId} \
 
 ---
 
-## 🏥 Health Checks
+## Health Checks
 
 ```bash
 # All services
@@ -124,7 +124,7 @@ curl http://localhost:8080/actuator/health  # Gateway
 
 ---
 
-## 📊 Monitoring
+## Monitoring
 
 ### Metrics
 ```bash
@@ -156,7 +156,7 @@ docker exec buy01-kafka kafka-console-consumer.sh \
 
 ---
 
-## 🐛 Debugging
+## Debugging
 
 ### View Logs
 ```bash
@@ -183,7 +183,7 @@ docker-compose down
 
 ---
 
-## 📝 Common Errors
+## Common Errors
 
 ### 401 Unauthorized
 - Missing `Authorization: Bearer $TOKEN` header
@@ -205,7 +205,7 @@ docker-compose down
 
 ---
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 ```bash
@@ -225,7 +225,7 @@ REDIS_PORT=6379
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - **API_TESTING_GUIDE.md** - Detailed API examples
 - **TESTING_GUIDE.md** - Testing procedures
@@ -234,7 +234,7 @@ REDIS_PORT=6379
 
 ---
 
-## 🎯 Rate Limits
+## Rate Limits
 
 | Endpoint | Limit | Burst |
 |----------|-------|-------|
@@ -244,19 +244,19 @@ REDIS_PORT=6379
 
 ---
 
-## 🔐 Security
+## Security
 
-- ✅ JWT authentication
-- ✅ BCrypt password hashing
-- ✅ CORS enabled
-- ✅ Rate limiting
-- ✅ Input validation
-- ✅ File validation
-- ✅ Ownership enforcement
+-  JWT authentication
+-  BCrypt password hashing
+-  CORS enabled
+-  Rate limiting
+-  Input validation
+-  File validation
+-  Ownership enforcement
 
 ---
 
-## 📱 Frontend Routes
+## Frontend Routes
 
 | Route | Role | Purpose |
 |-------|------|---------|
@@ -270,7 +270,7 @@ REDIS_PORT=6379
 
 ---
 
-## 🗄️ Database
+## Database
 
 ### Collections
 - `users` - User accounts
@@ -284,7 +284,7 @@ REDIS_PORT=6379
 
 ---
 
-## 🚢 Deployment
+## Deployment
 
 ### Docker
 ```bash
@@ -300,7 +300,7 @@ ng serve             # Frontend
 
 ---
 
-## 📞 Support
+## Support
 
 1. Check logs: `docker-compose logs -f <service>`
 2. Check health: `curl http://localhost:8080/actuator/health`
@@ -308,6 +308,3 @@ ng serve             # Frontend
 4. Test API: See API_TESTING_GUIDE.md
 
 ---
-
-**Last Updated:** 2024
-**Status:** ✅ Production Ready
