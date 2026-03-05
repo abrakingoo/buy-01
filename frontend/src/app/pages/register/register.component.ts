@@ -48,6 +48,9 @@ import { AuthService } from '../../services/auth.service';
               ✗ Please select an account type
             </div>
           </div>
+          <div class="error-message" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
           <button type="submit" class="btn-primary" [disabled]="form.invalid || loading">
             {{ loading ? 'Creating Account...' : 'Create Account' }}
           </button>
@@ -177,11 +180,21 @@ import { AuthService } from '../../services/auth.service';
     .card-footer a:hover {
       color: #F7931E;
     }
+    .error-message {
+      background-color: #ffebee;
+      color: #d32f2f;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      border-left: 4px solid #d32f2f;
+    }
   `]
 })
 export class RegisterComponent {
   form: FormGroup;
   loading = false;
+  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
@@ -200,12 +213,13 @@ export class RegisterComponent {
     if (this.form.invalid) return;
 
     this.loading = true;
+    this.errorMessage = '';
     this.authService.register(this.form.value).subscribe({
       next: () => {
         this.router.navigate(['/products']);
       },
       error: (err) => {
-        console.error('Registration failed', err);
+        this.errorMessage = err.status === 409 ? 'Email already exists' : 'Registration failed. Please try again.';
         this.loading = false;
       }
     });
