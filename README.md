@@ -1,6 +1,12 @@
 # Buy-01 E-Commerce Platform
+#frontend Angular
 
-#backend microserive
+
+https://github.com/user-attachments/assets/07a9dcad-14a5-4464-adab-95966858ee6f
+
+
+
+#backend microserive in action
 
 https://github.com/user-attachments/assets/889acd8f-80e0-4921-9bf5-6269d474a3b7
 
