@@ -1,7 +1,7 @@
 h1 {
   color: #333;
-  margin-bottom: 3rem;
-  font-size: 2.5rem;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 6vw, 2.5rem);
   font-weight: 700;
   position: relative;
   padding-bottom: 1rem;
@@ -18,79 +18,35 @@ h1::after {
   border-radius: 2px;
 }
 
-.toast-container {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 2000;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.toast {
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 500;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-  animation: slideInRight 0.3s ease;
-}
-
-@keyframes slideInRight {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-.toast-success {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-  color: white;
-}
-
-.toast-error {
-  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-  color: white;
-}
-
-.toast-info {
-  background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
-  color: white;
-}
-
 h2 {
   color: #333;
   margin-bottom: 1.5rem;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
   font-weight: 600;
 }
 
 .dashboard-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 2rem;
+  gap: clamp(1rem, 3vw, 2rem);
 }
 
 .products-section {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .product-card {
   background: white;
   border-radius: 12px;
-  padding: 1.5rem;
+  padding: clamp(1rem, 2vw, 1.5rem);
   display: grid;
-  grid-template-columns: 120px 1fr auto;
-  gap: 1.5rem;
+  grid-template-columns: clamp(80px, 20vw, 120px) 1fr auto;
+  gap: clamp(1rem, 2vw, 1.5rem);
   align-items: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+  transition: all 0.3s ease;
   border: 1px solid #f0f0f0;
 }
 
@@ -101,8 +57,8 @@ h2 {
 }
 
 .product-image {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 8px;
   transition: transform 0.3s ease;
@@ -113,15 +69,15 @@ h2 {
 }
 
 .product-image-placeholder {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  aspect-ratio: 1;
   background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #999;
-  font-size: 0.875rem;
+  font-size: clamp(0.7rem, 2vw, 0.875rem);
 }
 
 .product-info {
@@ -133,7 +89,7 @@ h2 {
 .product-name {
   font-weight: 700;
   color: #333;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
   transition: color 0.3s ease;
 }
 
@@ -144,14 +100,15 @@ h2 {
 .product-description {
   color: #666;
   margin: 0.5rem 0;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   line-height: 1.4;
 }
 
 .product-details {
   display: flex;
-  gap: 2rem;
+  gap: clamp(1rem, 2vw, 2rem);
   margin-top: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .product-detail-item {
@@ -161,18 +118,19 @@ h2 {
 
 .product-detail-label {
   color: #666;
-  font-size: 0.9rem;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
 .product-price {
   color: #FF6B35;
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
 }
 
 .product-stock {
   color: #333;
   font-weight: 600;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
 }
 
 .product-actions {
@@ -182,11 +140,11 @@ h2 {
 }
 
 .product-actions button {
-  padding: 0.6rem 1rem;
+  padding: clamp(0.5rem, 1vw, 0.6rem) clamp(0.8rem, 1.5vw, 1rem);
   border: none;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
   cursor: pointer;
   transition: all 0.3s ease;
   white-space: nowrap;
@@ -213,18 +171,19 @@ h2 {
 }
 
 .empty-state {
-  padding: 3rem 2rem;
+  padding: clamp(2rem, 5vw, 3rem);
   text-align: center;
   color: #999;
   background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
   border-radius: 12px;
   border: 2px dashed #e0e0e0;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .form-card {
   background: white;
   border-radius: 12px;
-  padding: 2rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   border: 1px solid #f0f0f0;
   height: fit-content;
@@ -241,7 +200,7 @@ h2 {
   margin-bottom: 0.6rem;
   font-weight: 600;
   color: #333;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
 }
 
 .form-group input,
@@ -250,7 +209,7 @@ h2 {
   padding: 0.85rem;
   border: 2px solid #e0e0e0;
   border-radius: 6px;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   font-family: inherit;
   transition: all 0.3s ease;
   box-sizing: border-box;
@@ -272,7 +231,7 @@ h2 {
   display: block;
   margin-top: 0.4rem;
   color: #999;
-  font-size: 0.85rem;
+  font-size: clamp(0.75rem, 2vw, 0.85rem);
 }
 
 .error-message {
@@ -282,14 +241,14 @@ h2 {
 
 .image-previews {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   gap: 1rem;
   margin-top: 1rem;
 }
 
 .image-preview {
   width: 100%;
-  height: 100px;
+  aspect-ratio: 1;
   object-fit: cover;
   border-radius: 6px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -298,15 +257,17 @@ h2 {
 .form-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .form-actions button {
   flex: 1;
-  padding: 0.95rem;
+  min-width: 120px;
+  padding: clamp(0.8rem, 2vw, 0.95rem);
   border: none;
   border-radius: 6px;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -348,6 +309,7 @@ h2 {
   justify-content: center;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
+  padding: 1rem;
 }
 
 @keyframes fadeIn {
@@ -361,10 +323,11 @@ h2 {
 
 .delete-modal {
   background: white;
-  padding: 2.5rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   max-width: 400px;
+  width: 100%;
   animation: slideUp 0.3s ease;
 }
 
@@ -382,26 +345,30 @@ h2 {
 .delete-modal h3 {
   color: #333;
   margin-bottom: 1rem;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
 }
 
 .delete-modal p {
   color: #666;
   margin-bottom: 2rem;
   line-height: 1.6;
+  font-size: clamp(0.9rem, 2vw, 1rem);
 }
 
 .delete-modal-actions {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .delete-modal-actions button {
   flex: 1;
-  padding: 0.85rem;
+  min-width: 100px;
+  padding: clamp(0.7rem, 1.5vw, 0.85rem);
   border: none;
   border-radius: 6px;
   font-weight: 600;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -436,22 +403,43 @@ h2 {
   }
 
   .product-card {
-    grid-template-columns: 100px 1fr auto;
+    grid-template-columns: 80px 1fr auto;
     gap: 1rem;
-  }
-
-  .product-image,
-  .product-image-placeholder {
-    width: 100px;
-    height: 100px;
   }
 
   .product-details {
     flex-direction: column;
     gap: 0.5rem;
   }
+}
 
-  h1 {
-    font-size: 1.8rem;
+@media (max-width: 480px) {
+  .product-card {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .product-image,
+  .product-image-placeholder {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+
+  .product-actions {
+    flex-direction: row;
+    width: 100%;
+  }
+
+  .product-actions button {
+    flex: 1;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
   }
 }
