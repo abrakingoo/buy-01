@@ -844,13 +844,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-##  Support
+## Documentation
 
-For questions or issues:
-- Open an issue on GitHub
-- Email: support@buy-01.com
-- Documentation: https://docs.buy-01.com
+For comprehensive guides and documentation, see the [docs](docs/) directory:
+
+- [API Testing Guide](docs/API_TESTING_GUIDE.md) - API examples and testing
+- [Testing Guide](docs/TESTING_GUIDE.md) - Unit, integration, and E2E testing
+- [Deployment Guide](docs/DEPLOYMENT_GUIDE.md) - Deployment instructions
+- [Quick Reference](docs/QUICK_REFERENCE.md) - Quick start and common commands
+- [Implementation Summary](docs/IMPLEMENTATION_SUMMARY.md) - Complete overview
+- [Project Completion Report](docs/PROJECT_COMPLETION_REPORT.md) - Detailed completion report
 
 ---
-
-**Built with  using Spring Boot and Angular**
