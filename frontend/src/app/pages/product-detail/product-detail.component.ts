@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductService } from '../../services/product.service';
+import { KshCurrencyPipe } from '../../pipes/currency.pipe';
 import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-product-detail',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, KshCurrencyPipe],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
