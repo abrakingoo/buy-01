@@ -1,0 +1,51 @@
+<div class="detail-container">
+  <button class="back-btn" (click)="goBack()">← Back to Products</button>
+  
+  <div *ngIf="product" class="detail-card">
+    <div class="detail-grid">
+      <div class="image-section">
+        <div class="image-wrapper">
+          <img 
+            *ngIf="product.imageUrls && product.imageUrls.length > 0" 
+            [src]="product.imageUrls[0]" 
+            alt="{{ product.name }}" 
+            class="product-image">
+          <div *ngIf="!product.imageUrls || product.imageUrls.length === 0" class="image-placeholder">
+            No Image Available
+          </div>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <h1 class="product-title">{{ product.name }}</h1>
+        
+        <div class="price-section">
+          <span class="price">${{ product.price }}</span>
+          <span class="stock-badge" [class.in-stock]="product.stock > 0" [class.out-of-stock]="product.stock === 0">
+            {{ product.stock > 0 ? 'In Stock' : 'Out of Stock' }}
+          </span>
+        </div>
+        
+        <div class="description-section">
+          <h3>Description</h3>
+          <p>{{ product.description }}</p>
+        </div>
+        
+        <div class="details-grid">
+          <div class="detail-item">
+            <label>Category</label>
+            <span>{{ product.category }}</span>
+          </div>
+          <div class="detail-item">
+            <label>Available Stock</label>
+            <span>{{ product.stock }} units</span>
+          </div>
+        </div>
+        
+        <button class="add-to-cart-btn" [disabled]="product.stock === 0">
+          {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
